@@ -1,6 +1,5 @@
 # coding=utf-8
 from __future__ import absolute_import
-import requests
 
 import octoprint.plugin
 
@@ -20,7 +19,8 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
 		]
 
 	def on_settings_save(self, data):
-		requests.post(self._settings.get(["url"]), json = {'local': 'testing' })
+		print('fhgberukywabfgvuyhebgvawfuyghjbgewuafiyhebwaf')
+		print(data)
 
 	def get_assets(self):
 		return dict(
