@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 
 import octoprint.plugin
+import requests
 
 class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
                        octoprint.plugin.TemplatePlugin,
@@ -13,18 +14,13 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
 	def get_settings_defaults(self):
 		return dict(url="https://en.wikipedia.org/wiki/Hello_world")
 
+	def get_template_vars(self):
+        return requests.post(self._settings.get(["url"]), json = {'local': 'testing' })
+
 	def get_template_configs(self):
 		return [
-			dict(type="navbar", custom_bindings=False),
 			dict(type="settings", custom_bindings=False)
 		]
-
-	def get_assets(self):
-		return dict(
-			js=["js/helloworld.js"],
-			css=["css/helloworld.css"],
-			less=["less/helloworld.less"]
-		)
 
 __plugin_name__ = "Hello World"
 __plugin_pythoncompat__ = ">=2.7,<4"
