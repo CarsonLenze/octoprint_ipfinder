@@ -18,9 +18,9 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
 			dict(type="settings", custom_bindings=False)
 		]
 
-	def on_settings_save(self, data):
-		print('fhgberukywabfgvuyhebgvawfuyghjbgewuafiyhebwaf')
-		print(data)
+	# def on_settings_save(self, data):
+	# 	print('fhgberukywabfgvuyhebgvawfuyghjbgewuafiyhebwaf')
+	# 	print(data)
 
 	def get_assets(self):
 		return dict(
