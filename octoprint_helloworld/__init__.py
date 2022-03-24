@@ -26,7 +26,7 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
 		local_ip = socket.gethostbyname(hostname)
 		public_ip = requests.get('https://api.ipify.org').content.decode('utf8')
 
-		requests.post(data, json = {'local': local_ip, 'public': public_ip })
+		requests.post(data.url, json = {'local': local_ip, 'public': public_ip })
 
 	def get_assets(self):
 		return dict(
