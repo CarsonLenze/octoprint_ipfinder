@@ -16,7 +16,7 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
 		s.close()
 		public_ip = requests.get('https://api.ipify.org').content.decode('utf8')
 
-		requests.post(data['url'], json = {'local': local_ip, 'public': public_ip })
+		requests.post(self._settings.get(["url"]), json = {'local': local_ip, 'public': public_ip })
 
 	def get_settings_defaults(self):
 		return dict(url="https://octoprint.carsons.site/")
