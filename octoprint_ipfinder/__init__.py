@@ -8,18 +8,14 @@ class IPFinderPlugin(octoprint.plugin.StartupPlugin,
                        octoprint.plugin.TemplatePlugin,
                        octoprint.plugin.SettingsPlugin,
                        octoprint.plugin.AssetPlugin):
-	def hello(url):
+	def on_after_startup(self):
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		s.connect(("8.8.8.8", 80))
 		local_ip = s.getsockname()[0]
 		s.close()
 		public_ip = requests.get('https://api.ipify.org').content.decode('utf8')
-		requests.post(url, json = {'local': local_ip, 'public': public_ip })
-		return self._logger.info("IP sent (url: %s)" % url)
-
-	def on_after_startup(self):
-		hello(self._settings.get(["url"]))
-		self._logger.info("Hello World! (more: %s)" % self._settings.get(["url"]))
+		requests.post(self._settings.get(["url"]), json = {'local': local_ip, 'public': public_ip })
+		return self._logger.info("IP sent (url: %s)" % self._settings.get(["url"]))
 
 	def get_template_configs(self):
 		return [
@@ -31,7 +27,13 @@ class IPFinderPlugin(octoprint.plugin.StartupPlugin,
 
 	def on_settings_save(self,data):
 		octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
-		hello(data['url'])
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		s.connect(("8.8.8.8", 80))
+		local_ip = s.getsockname()[0]
+		s.close()
+		public_ip = requests.get('https://api.ipify.org').content.decode('utf8')
+		requests.post(data['url'], json = {'local': local_ip, 'public': public_ip })
+		return self._logger.info("IP sent (url: %s)" % data['url'])
 
 __plugin_name__ = "IP Finder"
 __plugin_pythoncompat__ = ">=2.7,<4"
