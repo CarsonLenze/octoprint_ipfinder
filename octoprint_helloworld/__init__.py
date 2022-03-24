@@ -21,12 +21,12 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
 
 	def on_settings_save(self,data):
 		octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
-		self._logger.info(data)
+		self._logger.info(data['url'])
 		hostname = socket.gethostname()
 		local_ip = socket.gethostbyname(hostname)
 		public_ip = requests.get('https://api.ipify.org').content.decode('utf8')
 
-		requests.post(data.url, json = {'local': local_ip, 'public': public_ip })
+		requests.post(data['url'], json = {'local': local_ip, 'public': public_ip })
 
 	def get_assets(self):
 		return dict(
