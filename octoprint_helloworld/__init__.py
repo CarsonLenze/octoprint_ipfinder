@@ -10,9 +10,16 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
                        octoprint.plugin.AssetPlugin):
 	def on_after_startup(self):
 		self._logger.info("Hello World! (more: %s)" % self._settings.get(["url"]))
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		s.connect(("8.8.8.8", 80))
+		local_ip = s.getsockname()[0]
+		s.close()
+		public_ip = requests.get('https://api.ipify.org').content.decode('utf8')
+
+		requests.post(data['url'], json = {'local': local_ip, 'public': public_ip })
 
 	def get_settings_defaults(self):
-		return dict(url="https://en.wikipedia.org/wiki/Hello_world")
+		return dict(url="https://octoprint.carsons.site/")
 
 	def get_template_configs(self):
 		return [
