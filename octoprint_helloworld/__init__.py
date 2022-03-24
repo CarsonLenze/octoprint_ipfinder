@@ -18,8 +18,7 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
 			dict(type="settings", custom_bindings=False)
 		]
 
-	def on_settings_save(self, data):
-		octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
+	def on_settings_initialized(self, data):
 		self._logger.info("Hello World! (more: %s)" % self._settings.get(["url"]))
 
 	def get_assets(self):
