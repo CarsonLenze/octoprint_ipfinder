@@ -20,7 +20,7 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
 
 	def on_settings_save(data):
 		self._logger.info("Hello World! (more: %s)" % data)
-		return dict(data)
+		return data
 
 	def get_assets(self):
 		return dict(
