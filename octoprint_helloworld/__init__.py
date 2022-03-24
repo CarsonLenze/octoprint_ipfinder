@@ -8,7 +8,6 @@ class IPFinderPlugin(octoprint.plugin.StartupPlugin,
                        octoprint.plugin.TemplatePlugin,
                        octoprint.plugin.SettingsPlugin,
                        octoprint.plugin.AssetPlugin):
-
 	def on_after_startup(self):
 		send(self._settings.get(["url"]))
 		self._logger.info("Hello World! (more: %s)" % self._settings.get(["url"]))
